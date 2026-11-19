@@ -61,80 +61,46 @@ elif mode =="Generate code Questions" :
 else:
     question = st.text_area("Enter Interview Question Here")
     answer = st.text_area("Enter Your Answer", height=160)
-    
-    if st.button("Generate AI Response",type = "primary"):
+if st.button("Generate AI Response",type = "primary"):
         if mode == ["Evaluate Answer","Improve Answer"] and (not question.strip()):
             st.warning("please enter a valid Question and Answer")
             st.stop()
 
-
-topics = "Topic is " + topic + " Difficulty is " + level
-
-if mode == "Generate Question":
-    task = (
-        "Generate " + str(count) +
-        " frequently asked interview questions. "
-        "Include 3 situation-based questions and 2 theory questions."
-        + topics
-    )
-
-elif mode == "Generate Code Questions":
-    task = (
-        "Generate " + str(count) +
-        " frequently asked coding or technical questions "
-        "for the topic " + topic +
-        ". Give hints and accurate solutions."
-        + topics
-    )
-
-elif mode == "Evaluate Answers":
-    task = (
-        "Question: " + question +
-        " Answer: " + answer +
-        " Evaluate the answer based on the question "
-        "and identify the drawbacks."
-    )
-
-elif mode == "Improve Answer":
-    task = (
-        "Question: " + question +
-        " Answer: " + answer +
-        " Improve the answer and highlight the important points."
-    )
-
+topics = "Topic is" + topic +"Difficulty is" +level
+    if mode == "Generate Question" :
+        task = "Generate" + str(count) +"Frequently asked Interview question 3 situation based questions as well as 2 theory questions"
+    elif mode == "Generate Code Questions":
+        task="Generate" +str(count) + "Frequently asked Coding or technical questions for the topics"+ topic + "and give me the hints with accurate performance."
+    elif mode == "Evaluate Answers":
+        task = "Question:"+ question + "Answer: "+answer+"Evaluate the answer based on the question and identify the drawbacks ."
+    elif mode == "Improve Answer" :
+        task = "Question:" = question + "Answer: " + answer + "Improve the answer based on the result and highligth the important points."
 
 try:
-    response = client.chat.completions.create(
-        model=gen_model,
-        messages=[
-            {
-                "role": "system",
-                "content": "Act as an expert Technical Interviewer as well as an HR."
-            },
-            {
-                "role": "user",
-                "content": background + task
-            }
-        ],
-        temperature=0.7,
-        max_tokens=1800
-    )
+            req = client.chat.completions.create (
+    model=  gen_model , 
+    messages =[
+        {"role" : "system", "content" : " Act as You are an expert Technical Interviewer as well the HR "},
+        {
+            "role" : "user", "content" : backround + task
+        }
 
-    output = response.choices[0].message.content
+    ],
+    temperature = 0.7 ,
+    max_tokens = 1800 )
+            output = response.choices[0].message.content
+            st.subheader("AI Response")
+            st.markdown(output)
+            st.download_button("Download Response", output,file_name = "Interview_Respones.txt",main='text/plain')
+        except Exception as e:
+            st.error ("API connection was Unsuccessful:", e)
+            st.info("please check your API key and  rate limits ")
+            st.caption("powered by streamlit.io and GitHub. using LLM API")
 
-    st.subheader("AI Response")
-    st.markdown(output)
 
-    st.download_button(
-        label="Download Response",
-        data=output,
-        file_name="Interview_Responses.txt",
-        mime="text/plain"
-    )
 
-except Exception as e:
-    st.error(f"API connection was unsuccessful: {e}")
-    st.info("Please check your API key and rate limits.")
-    st.caption("Powered by Streamlit and GitHub using an LLM API.")
+
+
+    
 
     
