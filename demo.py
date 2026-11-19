@@ -67,15 +67,40 @@ else:
             st.warning("please enter a valid Question and Answer")
             st.stop()
 
-topics = "Topic is" + topic +"Difficulty is" +level
-    if mode == "Generate Question" :
-        task = "Generate" + str(count) +"Frequently asked Interview question 3 situation based questions as well as 2 theory questions"
-    elif mode == "Generate Code Questions":
-        task="Generate" +str(count) + "Frequently asked Coding or technical questions for the topics"+ topic + "and give me the hints with accurate performance."
-    elif mode == "Evaluate Answers":
-        task = "Question:"+ question + "Answer: "+answer+"Evaluate the answer based on the question and identify the drawbacks ."
-    elif mode == "Improve Answer" :
-        task = "Question:" = question + "Answer: " + answer + "Improve the answer based on the result and highligth the important points."
+
+topics = "Topic is " + topic + " Difficulty is " + level
+
+if mode == "Generate Question":
+    task = (
+        "Generate " + str(count) +
+        " frequently asked interview questions. "
+        "Include 3 situation-based questions and 2 theory questions."
+        + topics
+    )
+
+elif mode == "Generate Code Questions":
+    task = (
+        "Generate " + str(count) +
+        " frequently asked coding or technical questions "
+        "for the topic " + topic +
+        ". Give hints and accurate solutions."
+        + topics
+    )
+
+elif mode == "Evaluate Answers":
+    task = (
+        "Question: " + question +
+        " Answer: " + answer +
+        " Evaluate the answer based on the question "
+        "and identify the drawbacks."
+    )
+
+elif mode == "Improve Answer":
+    task = (
+        "Question: " + question +
+        " Answer: " + answer +
+        " Improve the answer and highlight the important points."
+    )
 
 try:
             req = client.chat.completions.create (
