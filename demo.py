@@ -92,7 +92,7 @@ try:
             output = response.choices[0].message.content
             st.subheader("AI Response")
             st.markdown(output)
-            st.download_button("Download Response = "client", output,file_name = "Interview_Respones.txt",mime='text/plain')
+            st.download_button(Download Response = "client", output,file_name = "Interview_Respones.txt",mime='text/plain')
         except Exception as e:
             st.error ("API connection was Unsuccessful:", e)
             st.info("please check your API key and  rate limits ")
