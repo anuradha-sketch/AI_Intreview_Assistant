@@ -83,18 +83,18 @@ try:
     messages =[
         {"role" : "system", "content" : " Act as You are an expert Technical Interviewer as well the HR "},
         {
-            "role" : "user", "content" : backround + task
+            "role" : "user", "content" : background + task
         }
 
     ],
     temperature = 0.7 ,
     max_tokens = 1800 )
             output = response.choices[0].message.content
-            st.subhheader("AI Response")
+            st.subheader("AI Response")
             st.markdown(output)
-            t.download_button("Download Response", output,file_name = "Interview_Respones.txt",main='text/plain')
+            st.download_button("Download Response = "client", output,file_name = "Interview_Respones.txt",mime='text/plain')
         except Exception as e:
-            st.error ("API connection was Unsuccessfull:", e)
+            st.error ("API connection was Unsuccessful:", e)
             st.info("please check your API key and  rate limits ")
             st.caption("powered by streamlit.io and GitHub. using LLM API")
     
